@@ -12,6 +12,10 @@ import "./App.css";
 const { Content } = Layout;
 
 import Sidebar from "./components/Sidebar";
+import Execution from "./components/Execution";
+import HardwareInfo from "./components/HardwareInfo";
+import Software from "./components/Software";
+import Settings from "./components/Settings";
 
 // ------------------------------------------------------------
 // 메인 컴포넌트
@@ -47,11 +51,10 @@ export default function AntdMessengerSidebarDemo() {
           <Content style={{ display: "flex", flexDirection: "column" }}>
             {/* Conditionally rendered content based on selected menu item */}
             <div style={{ flex: 1, padding: 16 }}>
-              {selected === "execution" && <h2 style={{ color: '#333' }}>실행 메뉴 내용</h2>}
-              {selected === "hardware" && <h2 style={{ color: '#333' }}>하드웨어 메뉴 내용</h2>}
-              {selected === "software" && <h2 style={{ color: '#333' }}>소프트웨어 메뉴 내용</h2>}
-              {selected === "github" && <h2 style={{ color: '#333' }}>깃허브 메뉴 내용</h2>}
-              {selected === "settings" && <h2 style={{ color: '#333' }}>설정 메뉴 내용</h2>}
+              {selected === "execution" && <Execution />}
+              {selected === "hardware" && <HardwareInfo />}
+              {selected === "software" && <Software />}
+              {selected === "settings" && <Settings />}
             </div>
             </Content>
         </Layout>
