@@ -1,62 +1,77 @@
-import { List, Card } from 'antd';
+import { List, Card, Skeleton } from 'antd';
 import {
   CodeOutlined,
+  DatabaseOutlined,
   RocketOutlined,
   HddOutlined,
   DesktopOutlined,
   WifiOutlined,
   KeyOutlined,
 } from '@ant-design/icons';
+import useHardwareStore from '../stores/hardwareStore';
 
-const data = [
-  {
-    title: 'CPU',
-    description: 'Intel(R) Core(TM) i7-8750H CPU @ 2.20GHz',
-    icon: <CodeOutlined />,
-  },
-  {
-    title: 'RAM',
-    description: '16.0 GB',
-    icon: <RocketOutlined />,
-  },
-  {
-    title: 'Storage',
-    description: 'Samsung SSD 970 EVO Plus 500GB',
-    icon: <HddOutlined />,
-  },
-  {
-    title: 'GPU',
-    description: 'NVIDIA GeForce GTX 1060',
-    icon: <DesktopOutlined />,
-  },
-  {
-    title: 'Network',
-    description: 'Intel(R) Wireless-AC 9560 160MHz',
-    icon: <WifiOutlined />,
-  },
-  {
-    title: 'TPM',
-    description: 'Enabled',
-    icon: <KeyOutlined />,
-  },
-];
+const HardwareInfo = () => {
+  const { hardwareInfo, loading } = useHardwareStore();
 
-const HardwareInfo = () => (
-  <Card title="하드웨어 정보">
-    <List
-      itemLayout="horizontal"
-      dataSource={data}
-      renderItem={(item) => (
-        <List.Item>
-          <List.Item.Meta
-            avatar={item.icon}
-            title={item.title}
-            description={item.description}
-          />
-        </List.Item>
+  const data = hardwareInfo ? [
+    {
+      title: 'CPU',
+      description: hardwareInfo.cpu,
+      icon: <CodeOutlined />,
+    },
+    {
+      title: '메인보드',
+      description: hardwareInfo.motherboard,
+      icon: <DatabaseOutlined />,
+    },
+    {
+      title: 'RAM',
+      description: hardwareInfo.ram,
+      icon: <RocketOutlined />,
+    },
+    {
+      title: 'Storage',
+      description: hardwareInfo.storage,
+      icon: <HddOutlined />,
+    },
+    {
+      title: 'GPU',
+      description: hardwareInfo.gpu,
+      icon: <DesktopOutlined />,
+    },
+    {
+      title: 'Network',
+      description: hardwareInfo.network,
+      icon: <WifiOutlined />,
+    },
+    {
+      title: 'TPM',
+      description: hardwareInfo.tpm,
+      icon: <KeyOutlined />,
+    },
+  ] : [];
+
+  return (
+    <Card title="하드웨어 정보">
+      {loading ? (
+        <Skeleton active />
+      ) : (
+        <List
+          itemLayout="horizontal"
+          dataSource={data}
+          renderItem={(item) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={item.icon}
+                title={item.title}
+                description={item.description}
+              />
+            </List.Item>
+          )}
+        />
       )}
-    />
-  </Card>
-);
+    </Card>
+  );
+};
 
 export default HardwareInfo;

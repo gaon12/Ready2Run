@@ -119,3 +119,19 @@ button {
     background-color: #0f0f0f69;
   }
 }
+
+.content-area .ant-list-item-meta-title {
+  font-size: 1.2em;
+}
+
+.content-area .ant-list-item-meta-description {
+  font-size: 1.1em;
+}
+
+.content-area .ant-card-head-title {
+  font-size: 1.3em;
+}
+
+.content-area p {
+  font-size: 1.1em;
+}

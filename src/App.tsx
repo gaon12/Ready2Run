@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { openUrl } from "@tauri-apps/plugin-opener";
 // Ant Design 컴포넌트와 아이콘을 사용합니다.
 import {
@@ -16,6 +16,7 @@ import Execution from "./components/Execution";
 import HardwareInfo from "./components/HardwareInfo";
 import Software from "./components/Software";
 import Settings from "./components/Settings";
+import useHardwareStore from "./stores/hardwareStore";
 
 // ------------------------------------------------------------
 // 메인 컴포넌트
@@ -24,7 +25,12 @@ import Settings from "./components/Settings";
 export default function AntdMessengerSidebarDemo() {
   // 사이드바 선택 상태(데모 목적)
   const [selected, setSelected] = useState("execution");
-  const githubRepo = import.meta.env.VITE_GITHUB_REPO;
+  const githubRepo = import.meta.env.VITE__GITHUB_REPO;
+  const fetchHardwareInfo = useHardwareStore((state) => state.fetchHardwareInfo);
+
+  useEffect(() => {
+    fetchHardwareInfo();
+  }, [fetchHardwareInfo]);
 
   const handleSelect = (key: string) => {
     if (key === 'github') {
@@ -50,7 +56,7 @@ export default function AntdMessengerSidebarDemo() {
           {/* 우측 컨텐트 영역 */}
           <Content style={{ display: "flex", flexDirection: "column" }}>
             {/* Conditionally rendered content based on selected menu item */}
-            <div style={{ flex: 1, padding: 16 }}>
+            <div style={{ flex: 1, padding: 16 }} className="content-area">
               {selected === "execution" && <Execution />}
               {selected === "hardware" && <HardwareInfo />}
               {selected === "software" && <Software />}
