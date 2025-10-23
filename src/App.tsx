@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { openUrl } from "@tauri-apps/plugin-opener";
 // Ant Design 컴포넌트와 아이콘을 사용합니다.
 import {
   Layout,
@@ -19,6 +20,17 @@ import Sidebar from "./components/Sidebar";
 export default function AntdMessengerSidebarDemo() {
   // 사이드바 선택 상태(데모 목적)
   const [selected, setSelected] = useState("execution");
+  const githubRepo = import.meta.env.VITE_GITHUB_REPO;
+
+  const handleSelect = (key: string) => {
+    if (key === 'github') {
+      if (githubRepo) {
+        openUrl(`https://github.com/${githubRepo}`);
+      }
+    } else {
+      setSelected(key);
+    }
+  };
 
   return (
     <div style={{ background: "#000", minHeight: "100vh", display: "flex", justifyContent: "center" }}>
@@ -29,7 +41,7 @@ export default function AntdMessengerSidebarDemo() {
       >
         <Layout style={{ height: 720 }}>
           {/* 좌측 사이드바: 상단 3개, 하단 2개만 */}
-          <Sidebar selected={selected} onSelect={setSelected} />
+          <Sidebar selected={selected} onSelect={handleSelect} />
 
           {/* 우측 컨텐트 영역 */}
           <Content style={{ display: "flex", flexDirection: "column" }}>
